@@ -1,6 +1,6 @@
 # Universal Articulation Intelligence — 基本设计书
 
-版本: v0.1 (Draft)
+版本: v0.2 (Draft)
 文档状态: 基本设计阶段（Basic Design / 外部設計）— 定义系统构成、模块职责、数据概念模型、接口规格与处理流程；**禁止**在本文档中包含：具体实现代码、类图/详细类设计、数据库物理表设计（DDL）、具体第三方库版本锁定
 作者: AI Research / Architecture (assisted)
 日期: 2026-08-18
@@ -17,6 +17,7 @@
 | 版本 | 日期 | 变更内容 | 作成者 |
 |---|---|---|---|
 | v0.1 | 2026-08-18 | 初版发布 | AI Research / Architecture |
+| v0.2 | 2026-08-18 | 三级文档交叉审核修订：(1) §17 追踪矩阵拆分 UAI-API-001~004 与 UAI-API-005（DCC 集成预留），避免过度声称本文档已设计 DCC 接口；(2) 澄清 UAI-BD-ARC-014 编号仅限部署配置设计方针，DCC 相关正式编号回填时须使用 UAI-BD-ARC-015 以避免冲突；(3) §6.1/§6.2 实体命名由 ValidationRecord 统一改为 ValidationReport，与详细设计书 §3.4/§4 字段级设计保持术语一致 | AI Research / Architecture |
 
 ### 0.2 承认体系（Approval Matrix）
 
@@ -246,7 +247,7 @@ V1+ 阶段：模块 5/7/9/12 可独立拆分为 Service/GPU Worker 部署单元�
 | GeometryEvidence / TopologyEvidence | 与 Region 关联的特征证据记录 | Instance Graph（引用，非存储原始几何） |
 | RelationEdge | Region 间关系（CONNECTS/PART_OF/SYMMETRIC_WITH/MOVES_RELATIVE_TO/ATTACHED_VIA） | Instance Graph |
 | ArticulationHypothesis | 一个结构假设（含 DSL 引用、Confidence、触发规则引用） | Instance Graph（当前资产内） |
-| ValidationRecord | 一次物理验证结果 | Experience Graph |
+| ValidationReport | 一次物理验证结果 | Experience Graph |
 | CorrectionRecord | 一次人工修正记录 | Experience Graph |
 | Pattern / Rule | 抽象结构规律（含 Confidence/Support/Evidence/Counterexample/Version） | Pattern / Rule Graph |
 | ProcessingRun | 一次完整处理流程的执行记录（用于可追溯性，对应 UAI-NFR-OBS-002） | Experience Graph |
@@ -257,7 +258,7 @@ V1+ 阶段：模块 5/7/9/12 可独立拆分为 Service/GPU Worker 部署单元�
 Asset 1—* Region
 Region *—* Region        : RelationEdge（CONNECTS/PART_OF/SYMMETRIC_WITH/MOVES_RELATIVE_TO/ATTACHED_VIA）
 Region 1—* ArticulationHypothesis
-ArticulationHypothesis 1—* ValidationRecord
+ArticulationHypothesis 1—* ValidationReport
 ArticulationHypothesis 0..1—* CorrectionRecord
 ProcessingRun 1—* ArticulationHypothesis   （用于追溯一次运行产出的全部假设）
 Pattern *—* ArticulationHypothesis         : 引用关系（该假设由哪些历史 Pattern 支持）
@@ -466,7 +467,8 @@ Client → [13 API/CLI] → [1 Ingestion]
 | UAI-NFR-SEC-001~003 | UAI-BD-FUNC-013, UAI-BD-NFR-007~008 |
 | UAI-NFR-OBS-001~003 | UAI-BD-NFR-009~010 |
 | UAI-DATA-001~004 | UAI-BD-DATA-001~004 |
-| UAI-API-001~005 | UAI-BD-IF-001~004 |
+| UAI-API-001~004 | UAI-BD-IF-001~004 |
+| UAI-API-005（DCC 集成接口预留） | 本文档未设计具体接口（仅需求侧预留），后续 DCC 通用集成设计见 `UAI-DD-001` §11.5，正式编号回填留待需求/基本设计下一版本（见该文档 Open Issue OI-06） |
 | UAI-ERR-001~003 | UAI-BD-ERR-001~003, §8.2 |
 | R-01~R-09 | UAI-BD-RISK-001~005（覆盖主要研究/架构风险；R-05/R-07/R-08/R-09 的设计层应对分别体现于 §2 范围控制、§14 测试方针、§5.3 规则可追溯设计、§5.9~5.10） |
 
