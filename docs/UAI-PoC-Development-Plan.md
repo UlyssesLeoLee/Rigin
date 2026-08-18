@@ -67,7 +67,7 @@
 | UAI-POC-SCOPE-007 | Physics Validation —— **Mock 实现**，返回预置的 Penetration/Stretching/Joint Instability 分数（含至少一个"验证失败"用例，驱动假设重排序） | UAI-DD-MOD-009 |
 | UAI-POC-SCOPE-008 | Confidence & Explanation（真实实现） | UAI-DD-MOD-010 |
 | UAI-POC-SCOPE-009 | CLI 最小子集：`submit` / `status` / `result`（真实实现，无需 API Gateway 网络层，本地进程内调用即可） | UAI-DD-IF-004 |
-| UAI-POC-SCOPE-010 | 端到端可追溯性：`ProcessingRun.stage_timeline` 真实记录 | UAI-DD-DATA §3.7 |
+| UAI-POC-SCOPE-010 | 端到端可追溯性：`ProcessingRun.stage_timeline` 真实记录 | UAI-DD-001 §3.7 |
 
 ### 2.2 明确排除（本轮不做）
 

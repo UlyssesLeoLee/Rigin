@@ -101,7 +101,7 @@
 
 | 数据类别 | PoC 阶段实现方式 | 依据 |
 |---|---|---|
-| 原始 Mesh/资产 | 本地文件系统目录 | UAI-DD-DATA §3.1 |
+| 原始 Mesh/资产 | 本地文件系统目录 | UAI-DD-001 §3.1 |
 | Instance Graph（Region/RelationEdge/Hypothesis 等） | 进程内内存结构 + 运行结束后序列化为本地 JSON/文件（不引入真实图数据库） | 简化自 UAI-BD-001 §6，符合"图数据库不存原始几何"的边界（本阶段图数据库本身也用文件模拟） |
 | Experience/Pattern Graph | PoC 阶段不落地（模块 011/012 不在最小闭环范围内，见 PoC 计划书 §2.2） | — |
 
