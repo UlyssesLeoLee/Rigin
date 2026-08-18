@@ -1,12 +1,12 @@
 # Universal Articulation Intelligence — 基本设计书
 
-版本: v0.2 (Draft)
+版本: v0.3 (Draft)
 文档状态: 基本设计阶段（Basic Design / 外部設計）— 定义系统构成、模块职责、数据概念模型、接口规格与处理流程；**禁止**在本文档中包含：具体实现代码、类图/详细类设计、数据库物理表设计（DDL）、具体第三方库版本锁定
 作者: AI Research / Architecture (assisted)
 日期: 2026-08-18
 文档标准: 参照日本 IPA（情報処理推進機構）共通フレーム2013（SLCP-JCF2013）之「基本設計プロセス（外部設計）」惯例编制，章节结构对齐典型基本设计书（システム構成／機能設計／データ設計／インターフェース設計／非機能設計／移行設計／テスト方針）
 
-上游依据文档：`UAI-REQ-001`（《Universal Articulation Intelligence 需求定义书》v0.2）。本文档中所有设计项均以设计 ID（`UAI-BD-*`）标注，并在 §17 追踪矩阵中与需求 ID 对应。
+上游依据文档：`UAI-REQ-001`（《Universal Articulation Intelligence 需求定义书》v0.3）。本文档中所有设计项均以设计 ID（`UAI-BD-*`）标注，并在 §17 追踪矩阵中与需求 ID 对应。
 
 ---
 
@@ -18,6 +18,7 @@
 |---|---|---|---|
 | v0.1 | 2026-08-18 | 初版发布 | AI Research / Architecture |
 | v0.2 | 2026-08-18 | 三级文档交叉审核修订：(1) §17 追踪矩阵拆分 UAI-API-001~004 与 UAI-API-005（DCC 集成预留），避免过度声称本文档已设计 DCC 接口；(2) 澄清 UAI-BD-ARC-014 编号仅限部署配置设计方针，DCC 相关正式编号回填时须使用 UAI-BD-ARC-015 以避免冲突；(3) §6.1/§6.2 实体命名由 ValidationRecord 统一改为 ValidationReport，与详细设计书 §3.4/§4 字段级设计保持术语一致 | AI Research / Architecture |
+| v0.3 | 2026-08-18 | 第二轮三级文档交叉审核（详见详细设计书 §13.0.2）：修正 §4.1 逻辑构成图与 §4.2 模块一览表的编号不一致——LLM Reasoning Adapter 独立编号为 [7]、Rig Compiler 改为 [8]、Physics Validation Coordinator 改为 [9]，并删除模块表中不存在的幻影模块「Universal Rig Graph Store」；§5.11 输出分级引用改指需求定义书附录 A.2 | AI Research / Architecture |
 
 ### 0.2 承认体系（Approval Matrix）
 
@@ -31,7 +32,7 @@
 
 | 文档 ID | 文档名 | 关系 |
 |---|---|---|
-| UAI-REQ-001 | 《Universal Articulation Intelligence 需求定义书》v0.2 | 上游依据 |
+| UAI-REQ-001 | 《Universal Articulation Intelligence 需求定义书》v0.3 | 上游依据 |
 | UAI-BD-001 | 本文档 | 自身 |
 | （未定） | 《Universal Articulation Intelligence 详细设计书》 | 下游文档，本文档进入下一阶段的输入 |
 
@@ -83,15 +84,15 @@ UAI 系统接收三维资产（MVP：Static Mesh）与可选运动证据，经�
                         │        │                                  ├──▶ Graph Store (外部/可替换)
                         │        ▼                                  │      Instance / Experience / Pattern Graph
                         │  [6] Structural DSL Layer                  │
-                        │        │  (LLM Reasoning Adapter) ────────┼──▶ LLM Provider (外部/可替换)
-                        │        ▼                                  │
-                        │  [7] Rig Compiler (deterministic)          │
                         │        │                                  │
                         │        ▼                                  │
-                        │  [8] Physics Validation Coordinator ───────┼──▶ Physics Engine (外部/可替换)
+                        │  [7] LLM Reasoning Adapter ───────────────┼──▶ LLM Provider (外部/可替换)
                         │        │                                  │
                         │        ▼                                  │
-                        │  [9] Universal Rig Graph Store              │
+                        │  [8] Rig Compiler (deterministic)          │
+                        │        │                                  │
+                        │        ▼                                  │
+                        │  [9] Physics Validation Coordinator ───────┼──▶ Physics Engine (外部/可替换)
                         │        │                                  │
                         │        ▼                                  │
                         │ [10] Confidence & Explanation Service       │
@@ -215,7 +216,7 @@ V1+ 阶段：模块 5/7/9/12 可独立拆分为 Service/GPU Worker 部署单元�
 
 - 输入：最终确认（或高置信度未修正）的 Rig Hypothesis
 - 处理概要：将 Universal Rig Graph 导出为 Skeleton（含 Joint/Axis/DOF/Range of Motion，MVP 子集）
-- 输出：导出结果（对应需求 §19 输出范围分级）
+- 输出：导出结果（对应需求定义书 附录 A.2 输出范围分级）
 - 对应需求：UAI-FR-RIG-003~006
 
 ### 5.12 UAI-BD-FUNC-012 API/CLI 请求处理

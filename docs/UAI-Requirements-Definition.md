@@ -1,6 +1,6 @@
 # Universal Articulation Intelligence — 需求定义书
 
-版本: v0.2
+版本: v0.3
 文档状态: 需求阶段 (Requirements Definition Only) — 禁止在本阶段进行详细设计、类图、数据库物理设计或代码实现
 作者: AI Research / Architecture (assisted)
 日期: 2026-08-18
@@ -16,6 +16,7 @@
 |---|---|---|---|
 | v0.1 | 2026-08-18 | 初版发布 | AI Research / Architecture |
 | v0.2 | 2026-08-18 | 追加文档管理信息、改订履历、承认体系、参照文档一览、用语表位置调整；对齐 IPA 标准文档结构；进行第二次自审并修订 §46 | AI Research / Architecture |
+| v0.3 | 2026-08-18 | 第二轮三级文档交叉审核（详见详细设计书 §13.0.2）：修正 9 处沿用原始提纲编号的失效 `§N` 交叉引用（§28→§46 自审、§24→§39 MVP、§44→§45 追踪矩阵、§37→§38 KPI 等）；将输入/输出范围分级表正式编号为**附录 A**（A.1/A.2）并同步全部引用 | AI Research / Architecture |
 
 ### 0.2 承认体系（Approval Matrix）
 
@@ -106,7 +107,7 @@ Skeleton 只是该问题的一种可能输出，而非问题本身。系统必�
 ## 7. 非目标（Non-Goals，阶段性）
 
 - 本阶段不追求完全替代人工 Rig Artist。
-- 本阶段不追求支持所有输入类型（见 §18 输入范围分级）。
+- 本阶段不追求支持所有输入类型（见 附录 A.1 输入范围分级）。
 - 本阶段不追求完整 DCC（Maya/Blender/Houdini）插件生态集成。
 - 本阶段不追求 Muscle/Cloth/Fluid 等高级形变系统的生产级实现。
 - 本阶段不追求云端多租户 SaaS 化部署（Local-first 优先）。
@@ -185,11 +186,11 @@ Skeleton 只是该问题的一种可能输出，而非问题本身。系统必�
 
 ## 13. 输入数据需求
 
-见 §18（按 MVP / 后续版本 / 研究性分级）。
+见 附录 A.1（按 MVP / 后续版本 / 研究性分级）。
 
 ## 14. 输出数据需求
 
-见 §19（按 MVP / V1 / Research 分级）。
+见 附录 A.2（按 MVP / V1 / Research 分级）。
 
 ---
 
@@ -204,7 +205,7 @@ Skeleton 只是该问题的一种可能输出，而非问题本身。系统必�
 | UAI-FR-GEO-005 | 空间关系与测地距离 | 系统须能计算 Spatial Relation 与 Geodesic Distance 作为区域邻接证据 | MUST |
 | UAI-FR-GEO-006 | 中轴/骨架结构提取 | 系统须能提取 Medial Structure（中轴面/骨架线）辅助结构分解 | SHOULD |
 
-验收标准：以上特征须以结构化 Structural Evidence 形式输出，且可独立于 Topology 模块单独测试（见 §28 自审第 4 条）。
+验收标准：以上特征须以结构化 Structural Evidence 形式输出，且可独立于 Topology 模块单独测试（见 §46.1 自审「Geometry 与 Topology 是否真正分离」一项）。
 
 ## 16. Topology Requirements
 
@@ -252,7 +253,7 @@ Skeleton 只是该问题的一种可能输出，而非问题本身。系统必�
 |---|---|---|---|
 | UAI-FR-GRAPH-001 | Instance Graph | 系统须为每个资产维护 Instance Graph，记录 CONNECTS / PART_OF / SYMMETRIC_WITH / MOVES_RELATIVE_TO / ATTACHED_VIA 等关系 | MUST |
 | UAI-FR-GRAPH-002 | Experience Graph | 系统须记录 AI 判断、Physics Validation 结果、人工修正、成功/失败标记，形成可查询历史 | MUST |
-| UAI-FR-GRAPH-003 | Pattern/Rule Graph | 系统须能从大量实例抽象出结构规律，并保存 Confidence、Support、Evidence、Counterexample、Version | SHOULD (MVP 可用最小子集验证，见 §24) |
+| UAI-FR-GRAPH-003 | Pattern/Rule Graph | 系统须能从大量实例抽象出结构规律，并保存 Confidence、Support、Evidence、Counterexample、Version | SHOULD（MVP 可用最小子集验证，见 §39） |
 | UAI-FR-GRAPH-004 | 图数据库职责边界 | 图数据库不得用于存储原始 Mesh 顶点数据；仅存储结构关系、特征摘要引用与经验/规律数据 | MUST |
 | UAI-FR-GRAPH-005 | 失败案例保留 | 失败的 Articulation Hypothesis 及其验证结果不得被丢弃，须写入 Experience Graph | MUST |
 
@@ -298,7 +299,7 @@ Skeleton 只是该问题的一种可能输出，而非问题本身。系统必�
 
 | ID | 标题 | 描述 | 优先级 |
 |---|---|---|---|
-| UAI-FR-RIG-001 | Universal Rig Graph 表示 | 系统须提供能够抽象 Bone、Rigid、Hinge、Ball Joint、Slider、Spring、Muscle、Tendon、Cable、Elastic Chain、Soft Structure、Procedural Deformation 的统一图表示 | MUST（MVP 覆盖 Bone/Rigid/Hinge/Ball Joint 子集，其余 V1/Research，见 §19） |
+| UAI-FR-RIG-001 | Universal Rig Graph 表示 | 系统须提供能够抽象 Bone、Rigid、Hinge、Ball Joint、Slider、Spring、Muscle、Tendon、Cable、Elastic Chain、Soft Structure、Procedural Deformation 的统一图表示 | MUST（MVP 覆盖 Bone/Rigid/Hinge/Ball Joint 子集，其余 V1/Research，见 附录 A.2） |
 | UAI-FR-RIG-002 | 非默认骨骼假设 | 系统不得默认所有对象必须输出传统 Skeleton；Skeleton 为 Universal Rig 的一种导出形式 | MUST |
 | UAI-FR-RIG-003 | Skeleton 导出 | 系统须能将 Universal Rig Graph 导出为传统 Skeleton + Joint + Axis + DOF + Range of Motion 表示 | MUST |
 | UAI-FR-RIG-004 | Skinning 区域与权重 | 系统须能产出 Skinning Region 划分与 Skin Weights（MVP 可用简化算法） | SHOULD（MVP 简化版，V1 生产级） |
@@ -335,7 +336,7 @@ Skeleton 只是该问题的一种可能输出，而非问题本身。系统必�
 
 ## 27. Functional Requirements 汇总
 
-功能需求已按领域分布于 §15–§26（编号前缀 UAI-FR-*）。本节仅作交叉索引，详见 §44 Requirement Traceability Matrix。
+功能需求已按领域分布于 §15–§26（编号前缀 UAI-FR-*）。本节仅作交叉索引，详见 §45 Requirement Traceability Matrix。
 
 ## 28. Non-functional Requirements
 
@@ -385,7 +386,7 @@ Skeleton 只是该问题的一种可能输出，而非问题本身。系统必�
 |---|---|---|---|
 | UAI-NFR-OBS-001 | 结构化日志 | 关键处理阶段（拆分、检索、推理、验证）须输出结构化日志，可关联到具体资产与假设 ID | MUST |
 | UAI-NFR-OBS-002 | 可追溯的推理链 | 每个最终 Rig 结果须能追溯回其证据、假设、验证过程与（如有）人工修正 | MUST |
-| UAI-NFR-OBS-003 | 指标采集 | 系统须能采集 §37 KPI 相关的评估指标数据 | SHOULD |
+| UAI-NFR-OBS-003 | 指标采集 | 系统须能采集 §38 KPI 相关的评估指标数据 | SHOULD |
 
 ---
 
@@ -539,9 +540,11 @@ Static Mesh → Geometry Feature Extraction → Topology Feature Extraction → 
 
 ---
 
-## 附：§18 输入范围分级 与 §19 输出范围分级
+## 附录 A. 输入/输出范围分级
 
-### 输入范围分级
+> 本附录承载 §13 输入数据需求 与 §14 输出数据需求 的分级明细。
+
+### A.1 输入范围分级
 
 | 输入类型 | 分级 |
 |---|---|
@@ -557,7 +560,7 @@ Static Mesh → Geometry Feature Extraction → Topology Feature Extraction → 
 | 3DGS（静态） | Research |
 | Dynamic 3DGS | Research |
 
-### 输出范围分级
+### A.2 输出范围分级
 
 | 输出类型 | 分级 |
 |---|---|
@@ -621,7 +624,7 @@ Static Mesh → Geometry Feature Extraction → Topology Feature Extraction → 
 | 术语定义先行于需求本体 | ✅ 已具备 | §5 |
 | 需求编号唯一且可追踪 | ✅ 已具备 | 全文 UAI-FR-*/UAI-NFR-*/UAI-DATA-*/UAI-API-*/UAI-ERR-* 编号体系 + §45 追踪矩阵 |
 | 每条需求含优先级 | ✅ 已具备 | MUST/SHOULD/COULD 标注 |
-| 验收标准可客观判定 | ⚠ 部分待量化 | 见 §41 R-01 OI-01/OI-02，性能与校准的具体数值阈值仍待基本设计阶段确定，已在 Open Issues 中显式标注，不视为遗漏而是有意延后的开放项 |
+| 验收标准可客观判定 | ⚠ 部分待量化 | 见 §41 R-01 与 §42 OI-01/OI-02，性能与校准的具体数值阈值仍待基本设计阶段确定，已在 Open Issues 中显式标注，不视为遗漏而是有意延后的开放项 |
 | 风险登记表（リスク一覧） | ✅ 已具备 | §41，含 ID/影响/应对方向 |
 | 变更管理机制说明 | ⚠ 待补充 | 当前文档未定义"需求变更如何触发新版本号与重新承认"的流程，建议在下一版补充"需求变更管理"小节 |
 
@@ -629,7 +632,7 @@ Static Mesh → Geometry Feature Extraction → Topology Feature Extraction → 
 
 ### 46.1 需求成熟度评分
 
-按 §28（自审要求）执行系统性自审后，评估如下（1～5 分，5 为最佳）：
+按既定自审要求执行系统性自审后，评估如下（1～5 分，5 为最佳）：
 
 | 维度 | 评分 | 说明 |
 |---|---|---|
